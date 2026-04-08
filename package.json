@@ -40,7 +40,7 @@
 		"release-it": "^19.2.4"
   },
   "scripts": {
-    "lint": "node --check index.js && node --check lib/platform.js",
+    "lint": "node --check dist/**.js",
     "test": "npm run lint",
     "release": "release-it"
   }
