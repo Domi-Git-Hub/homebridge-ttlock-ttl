@@ -1,0 +1,115 @@
+{
+  "pluginAlias": "TTLockTTL",
+  "pluginType": "platform",
+  "singular": true,
+  "headerDisplay": "<p style='line-height:1.5'>Configure your TTLock/TTL on-premise account. The plugin logs in only when needed, discovers locks at startup, exposes a Lock service and a Battery service for each lock, runs a single sequential poll cycle for lock state and battery, and renews the token automatically when the API returns an invalid token.</p>",
+  "footerDisplay": "<p style='line-height:1.5'>HideLock accepts lock IDs and/or lock names in a text box. Example: <code>4717, Front Door</code> or one entry per line. Password may be entered as a 32-character MD5 hash; if you paste plaintext by mistake, the plugin will hash it automatically and log a warning.</p>",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "username": {
+        "title": "USERNAME",
+        "type": "string",
+        "required": true,
+        "description": "TTLock on-premise account username used with /user/login."
+      },
+      "password": {
+        "title": "PASSWORD as md5",
+        "type": "string",
+        "required": true,
+        "format": "password",
+        "description": "Enter the TTLock password as a 32-character MD5 hash. Plaintext is auto-hashed if needed."
+      },
+      "pollerSeconds": {
+        "title": "Polling interval (s)",
+        "type": "integer",
+        "default": 20,
+        "minimum": 1,
+        "maximum": 86400,
+        "description": "Single sequential polling interval in seconds. After each completed cycle, the plugin waits this long before starting the next cycle. Regular polling refreshes queryState and getElectricQuantity for each visible lock without calling listByUser again."
+      },
+      "lowBatteryThreshold": {
+        "title": "Low battery threshold (%)",
+        "type": "integer",
+        "default": 20,
+        "minimum": 1,
+        "maximum": 100,
+        "description": "Battery percentage at or below which HomeKit shows a low battery warning for this account."
+      },
+      "maxApiRetries": {
+        "title": "Maximum API retries",
+        "type": "integer",
+        "default": 3,
+        "minimum": 1,
+        "maximum": 10,
+        "description": "Maximum number of attempts per TTLock API request for this account."
+      },
+      "requestTimeoutMs": {
+        "title": "Request timeout (ms)",
+        "type": "integer",
+        "default": 10000,
+        "minimum": 1000,
+        "maximum": 120000,
+        "description": "HTTP timeout for API requests for this account."
+      },
+      "retryDelayMs": {
+        "title": "Delay between retries (ms)",
+        "type": "integer",
+        "default": 1000,
+        "minimum": 0,
+        "maximum": 60000,
+        "description": "Delay between TTLock retry attempts for this account."
+      },
+      "refreshDelayAfterActionMs": {
+        "title": "Refresh delay after lock/unlock (ms)",
+        "type": "integer",
+        "default": 3000,
+        "minimum": 0,
+        "maximum": 120000,
+        "description": "Delay before the second API request that re-reads the real lock state after a lock or unlock command for this account."
+      },
+      "hideLocks": {
+        "title": "HideLock",
+        "type": "string",
+        "default": "",
+        "placeholder": "4717, Front Door",
+        "description": "Locks to hide from HomeKit. Enter lock IDs and/or lock names separated by commas or one per line."
+      }
+    }
+  },
+  "layout": [
+    {
+      "type": "section",
+      "title": "TTLock/TTL Account",
+      "items": [
+        "username",
+        "password"
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Polling",
+      "items": [
+        "pollerSeconds"
+      ]
+    },
+    {
+      "type": "section",
+      "title": "API Reliability",
+      "items": [
+        "lowBatteryThreshold",
+        "maxApiRetries",
+        "requestTimeoutMs",
+        "retryDelayMs",
+        "refreshDelayAfterActionMs"
+      ]
+    },
+    {
+      "type": "section",
+      "title": "HomeKit Visibility",
+      "items": [
+        "hideLocks"
+      ]
+    }
+  ]
+}

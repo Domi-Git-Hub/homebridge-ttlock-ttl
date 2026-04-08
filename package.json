@@ -1,0 +1,44 @@
+{
+  "name": "homebridge-ttlock-ttl",
+  "version": "1.0.2",
+  "description": "Homebridge plugin for TTLock/TTL on-premise smart locks with lock state and battery polling.",
+  "displayName": "TTLock/TTL",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "files": [
+    "dist",
+    "config.schema.json",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "homebridge-plugin",
+    "homebridge",
+    "ttlock",
+    "smart-lock",
+    "homekit"
+  ],
+  "author": "Dominic Clavet",
+  "homepage": "https://github.com/Domi-Git-Hub/homebridge-ttlock-ttl#readme",
+  "bugs": {
+    "url": "https://github.com/Domi-Git-Hub/homebridge-ttlock-ttl/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Domi-Git-Hub/homebridge-ttlock-ttl.git"
+  },
+  "engines": {
+    "homebridge": ">=1.8.0",
+    "node": "^20.0.0 || ^22.0.0 || ^24.0.0"
+  },
+  "peerDependencies": {
+    "homebridge": ">=1.8.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.22.0",
+    "eslint": "^9.22.0"
+  },
+  "scripts": {
+    "clean": "rimraf dist"
+  }
+}
