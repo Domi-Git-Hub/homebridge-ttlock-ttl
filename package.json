@@ -1,6 +1,6 @@
 {
   "name": "homebridge-ttlock-ttl",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Homebridge plugin for TTLock/TTL on-premise smart locks with lock state and battery polling.",
   "displayName": "TTLock/TTL",
   "license": "MIT",
@@ -37,7 +37,7 @@
   "devDependencies": {
     "@eslint/js": "^9.22.0",
     "eslint": "^9.22.0",
-		"release-it": "^19.2.4"
+    "release-it": "^19.2.4"
   },
   "scripts": {
     "lint": "node --check dist/**.js",
