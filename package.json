@@ -40,6 +40,8 @@
 		"release-it": "^19.2.4"
   },
   "scripts": {
-    "clean": "rimraf dist"
+    "lint": "node --check index.js && node --check lib/platform.js",
+    "test": "npm run lint",
+    "release": "release-it"
   }
 }

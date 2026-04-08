@@ -29,7 +29,7 @@ The plugin serializes API calls to avoid stacking requests on top of each other.
 
 ## Requirements
 
-- Homebridge `>= 1.8.0`
+- Homebridge `>= 1.8.0  || ^2.0.0`
 - Node.js `20.x`, `22.x`, or `24.x`
 - A TTLock on-premise account reachable at `http://onpremise.ttlock.com`
 - The TTLock password entered as MD5, or plaintext that the plugin can hash automatically
