@@ -158,8 +158,6 @@ Before requesting Homebridge verification, make sure all of the following are tr
 
 ```bash
 npm install
-npm run build
-npm run lint
 ```
 
 ## License

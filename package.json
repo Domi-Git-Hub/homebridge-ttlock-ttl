@@ -28,7 +28,7 @@
     "url": "git+https://github.com/Domi-Git-Hub/homebridge-ttlock-ttl.git"
   },
   "engines": {
-    "homebridge": ">=1.8.0",
+    "homebridge": ">=1.8.0 || ^2.0.0",
     "node": "^20.0.0 || ^22.0.0 || ^24.0.0"
   },
   "peerDependencies": {
