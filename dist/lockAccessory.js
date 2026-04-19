@@ -64,7 +64,7 @@ class TTLockAccessory {
         this.applyMetadata();
     }
     getDisplayName() {
-        return this.lock.lockAlias?.trim() || this.lock.lockName?.trim() || `TTLock ${this.lock.lockId}`;
+        return this.lock.alias?.trim() || this.lock.name?.trim() || `TTLock ${this.lock.lockId}`;
     }
     async refreshLockState() {
         if (this.actionInFlight) {
