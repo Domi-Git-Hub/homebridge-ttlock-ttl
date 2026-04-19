@@ -1,6 +1,6 @@
 {
   "name": "homebridge-ttlock-ttl",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Homebridge plugin for TTLock/TTL on-premise smart locks with lock state and battery polling.",
   "displayName": "TTLock/TTL",
   "license": "MIT",
