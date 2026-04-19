@@ -20,6 +20,12 @@
         "format": "password",
         "description": "Enter the TTLock password as a 32-character MD5 hash. Plaintext is auto-hashed if needed."
       },
+      "debug": {
+        "title": "Debug",
+        "type": "boolean",
+        "default": false,
+        "description": "Show warn and error logs only when Debug is enabled."
+      },
       "pollerSeconds": {
         "title": "Polling interval (s)",
         "type": "integer",
@@ -83,7 +89,8 @@
       "title": "TTLock/TTL Account",
       "items": [
         "username",
-        "password"
+        "password",
+        "debug"
       ]
     },
     {

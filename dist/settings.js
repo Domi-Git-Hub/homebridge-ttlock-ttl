@@ -11,6 +11,7 @@ exports.DEFAULTS = {
     requestTimeoutMs: 10000,
     retryDelayMs: 1000,
     refreshDelayAfterActionMs: 3000,
+    debug: false,
 };
 exports.TTLOCK_BASE_URL = 'http://onpremise.ttlock.com';
 //# sourceMappingURL=settings.js.map

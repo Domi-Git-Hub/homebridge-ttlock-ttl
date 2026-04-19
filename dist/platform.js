@@ -25,7 +25,7 @@ class TTLockPlatform {
         this.config = this.normalizeConfig(config);
         this.apiClient = new api_client_1.TTLockApiClient(this.log, this.config);
         if (!this.isConfigured()) {
-            this.log.warn(`[${settings_1.PLATFORM_DISPLAY_NAME}] Plugin loaded but not started because username/password are missing.`);
+            this.logWarn(`[${settings_1.PLATFORM_DISPLAY_NAME}] Plugin loaded but not started because username/password are missing.`);
             return;
         }
         this.api.on('didFinishLaunching', () => {
@@ -50,7 +50,7 @@ class TTLockPlatform {
                 await lockAccessory.refreshLockState();
             }
             catch (error) {
-                this.log.warn(`[${lockAccessory.getDisplayName()}] State poll failed: ${this.errorToMessage(error)}`);
+                this.logWarn(`[${lockAccessory.getDisplayName()}] State poll failed: ${this.errorToMessage(error)}`);
             }
         }
     }
@@ -60,7 +60,7 @@ class TTLockPlatform {
                 await lockAccessory.refreshBattery();
             }
             catch (error) {
-                this.log.warn(`[${lockAccessory.getDisplayName()}] Battery poll failed: ${this.errorToMessage(error)}`);
+                this.logWarn(`[${lockAccessory.getDisplayName()}] Battery poll failed: ${this.errorToMessage(error)}`);
             }
         }
     }
@@ -79,7 +79,7 @@ class TTLockPlatform {
             this.syncAccessoriesFromLocks(locks);
         }
         catch (error) {
-            this.log.error(`[${settings_1.PLATFORM_DISPLAY_NAME}] Initial lock discovery failed: ${this.errorToMessage(error)}`);
+            this.logError(`[${settings_1.PLATFORM_DISPLAY_NAME}] Initial lock discovery failed: ${this.errorToMessage(error)}`);
         }
     }
     async runPollingCycle() {
@@ -97,7 +97,7 @@ class TTLockPlatform {
             await this.refreshAllBatteries();
         }
         catch (error) {
-            this.log.error(`[${settings_1.PLATFORM_DISPLAY_NAME}] Polling cycle failed: ${this.errorToMessage(error)}`);
+            this.logError(`[${settings_1.PLATFORM_DISPLAY_NAME}] Polling cycle failed: ${this.errorToMessage(error)}`);
         }
     }
     syncAccessoriesFromLocks(locks) {
@@ -215,11 +215,25 @@ class TTLockPlatform {
             requestTimeoutMs: this.numberOrDefault(config.requestTimeoutMs, settings_1.DEFAULTS.requestTimeoutMs, 1000, 120000),
             retryDelayMs: this.numberOrDefault(config.retryDelayMs, settings_1.DEFAULTS.retryDelayMs, 0, 60000),
             refreshDelayAfterActionMs: this.numberOrDefault(config.refreshDelayAfterActionMs, settings_1.DEFAULTS.refreshDelayAfterActionMs, 0, 120000),
+            debug: Boolean(config.debug ?? settings_1.DEFAULTS.debug),
             hideLocks: this.parseHideLocks(config.hideLocks),
         };
     }
     isConfigured() {
         return this.config.username.length > 0 && this.config.password.length > 0;
+    }
+    shouldLogProblems() {
+        return Boolean(this.config.debug);
+    }
+    logWarn(message) {
+        if (this.shouldLogProblems()) {
+            this.log.warn(message);
+        }
+    }
+    logError(message) {
+        if (this.shouldLogProblems()) {
+            this.log.error(message);
+        }
     }
     numberOrDefault(value, fallback, min, max) {
         const numeric = Number(value);

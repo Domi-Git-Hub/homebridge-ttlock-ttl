@@ -172,7 +172,7 @@ class TTLockApiClient {
                     this.log.debug(`[TTLock API] ${label} timed out on attempt ${attempt}/${this.config.maxApiRetries}.`);
                 }
                 else {
-                    this.log.warn(`[TTLock API] ${label} failed on attempt ${attempt}/${this.config.maxApiRetries}: ${this.errorToMessage(error)}`);
+                    this.logWarn(`[TTLock API] ${label} failed on attempt ${attempt}/${this.config.maxApiRetries}: ${this.errorToMessage(error)}`);
                 }
                 if (invalidToken) {
                     this.log.info('[TTLock API] Access token expired or invalid, requesting a fresh session.');
@@ -329,7 +329,7 @@ class TTLockApiClient {
             }
         }
         const keys = Object.keys(response ?? {}).sort().join(', ');
-        this.log.warn(`[TTLock API] list locks response did not expose a known list field. Available keys: ${keys || 'none'}`);
+        this.logWarn(`[TTLock API] list locks response did not expose a known list field. Available keys: ${keys || 'none'}`);
         return [];
     }
     extractLockStateValue(response) {
@@ -355,7 +355,7 @@ class TTLockApiClient {
         if (/^[a-fA-F0-9]{32}$/.test(trimmed)) {
             return trimmed.toLowerCase();
         }
-        this.log.warn('[TTLock API] Password is not a 32-character MD5 hash. Hashing the provided value automatically.');
+        this.logWarn('[TTLock API] Password is not a 32-character MD5 hash. Hashing the provided value automatically.');
         return (0, crypto_1.createHash)('md5').update(trimmed).digest('hex');
     }
     parseLockState(rawState) {
@@ -405,6 +405,14 @@ class TTLockApiClient {
     }
     isTimeoutError(error) {
         return error instanceof TTLockTimeoutError;
+    }
+    shouldLogProblems() {
+        return Boolean(this.config.debug);
+    }
+    logWarn(message) {
+        if (this.shouldLogProblems()) {
+            this.log.warn(message);
+        }
     }
     errorToMessage(error) {
         if (error instanceof Error) {

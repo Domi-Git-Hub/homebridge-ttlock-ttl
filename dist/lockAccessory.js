@@ -220,11 +220,11 @@ class TTLockAccessory {
                 this.remoteControlAvailable = false;
                 if (!this.remoteControlBlockedLogged) {
                     this.remoteControlBlockedLogged = true;
-                    this.platform.log.warn(`[${this.getDisplayName()}] Remote control is disabled for this lock/account on the TTLock server. Commands will be ignored until the plugin is restarted after enabling remote control.`);
+                    this.logWarn(`[${this.getDisplayName()}] Remote control is disabled for this lock/account on the TTLock server. Commands will be ignored until the plugin is restarted after enabling remote control.`);
                 }
             }
             else {
-                this.platform.log.warn(`[${this.getDisplayName()}] ${action} failed: ${message}`);
+                this.logWarn(`[${this.getDisplayName()}] ${action} failed: ${message}`);
             }
             this.targetLockState = this.currentLockState === this.platform.Characteristic.LockCurrentState.SECURED
                 ? this.platform.Characteristic.LockTargetState.SECURED
@@ -251,7 +251,7 @@ class TTLockAccessory {
         }
         this.lastStateWarningKey = message;
         this.lastStateWarningAt = now;
-        this.platform.log.warn(`[${this.getDisplayName()}] State refresh unavailable, keeping last known state: ${message}`);
+        this.logWarn(`[${this.getDisplayName()}] State refresh unavailable, keeping last known state: ${message}`);
     }
     clearStateWarning() {
         this.lastStateWarningKey = '';
@@ -264,11 +264,19 @@ class TTLockAccessory {
         }
         this.lastBatteryWarningKey = message;
         this.lastBatteryWarningAt = now;
-        this.platform.log.warn(`[${this.getDisplayName()}] Battery refresh unavailable, keeping last known battery value: ${message}`);
+        this.logWarn(`[${this.getDisplayName()}] Battery refresh unavailable, keeping last known battery value: ${message}`);
     }
     clearBatteryWarning() {
         this.lastBatteryWarningKey = '';
         this.lastBatteryWarningAt = 0;
+    }
+    shouldLogProblems() {
+        return Boolean(this.platform.config.debug);
+    }
+    logWarn(message) {
+        if (this.shouldLogProblems()) {
+            this.platform.log.warn(message);
+        }
     }
     errorToMessage(error) {
         if (error instanceof Error) {
